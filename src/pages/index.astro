@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MainVisual from "../components/MainVisual.astro";
+import Carousel from "../components/Carousel.astro";
+---
+
+<Layout title="Home">
+  <div class="wrapper">
+    <MainVisual />
+  </div>
+  <section class="section">
+    <Carousel />
+  </section>
+  <div style="height: 300vh;"></div>
+</Layout>
+
+<style lang="scss">
+  .wrapper {
+    width: 768px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

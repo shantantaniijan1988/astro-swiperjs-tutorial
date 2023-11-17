@@ -1,0 +1,207 @@
+---
+import { Image } from "astro:assets";
+import slideImage1 from "../assets/slide-image_1.jpg";
+import slideImage2 from "../assets/slide-image_2.jpg";
+import slideImage3 from "../assets/slide-image_3.jpg";
+import slideImage4 from "../assets/slide-image_4.jpg";
+import slideImage5 from "../assets/slide-image_5.jpg";
+
+interface Card {
+  title: string;
+  slug: string;
+  image: any;
+  alt: string;
+  author: string;
+}
+
+const cardItems = [
+  {
+    title: "Card Title 1",
+    slug: "#!",
+    image: slideImage1,
+    alt: "slide image 1",
+    author: "aaaaa",
+  },
+  {
+    title: "Card Title 2",
+    slug: "#!",
+    image: slideImage2,
+    alt: "slide image 2",
+    author: "bbbbb",
+  },
+  {
+    title: "Card Title 3",
+    slug: "#!",
+    image: slideImage3,
+    alt: "slide image 3",
+    author: "ccccc",
+  },
+  {
+    title: "Card Title 4",
+    slug: "#!",
+    image: slideImage4,
+    alt: "slide image 4",
+    author: "ddddd",
+  },
+  {
+    title: "Card Title 5",
+    slug: "#!",
+    image: slideImage5,
+    alt: "slide image 5",
+    author: "eeeee",
+  },
+];
+---
+
+<div class="carousel__container">
+  <div class="carousel swiper">
+    <div class="carousel__wrapper swiper-wrapper">
+      {
+        cardItems.map(
+          (item): Card => (
+            <div class="carousel__slide swiper-slide">
+              <a class="card" href={item.slug}>
+                <Image class="card__image" src={item.image} alt={item.alt} />
+                <div class="card__body">
+                  <h2 class="card__title">{item.title}</h2>
+                  <span class="card__author">by: {item.author}</span>
+                </div>
+              </a>
+            </div>
+          )
+        )
+      }
+    </div>
+  </div>
+  <div class="carousel__desc">
+    <p class="section-title">section title</p>
+    <div class="navigation">
+      <div class="swiper-button-prev"></div>
+      <div class="fraction">
+        <span class="current">1</span> / <span class="total"
+          >{cardItems.length}</span
+        >
+      </div>
+      <div class="swiper-button-next"></div>
+    </div>
+    <a href="#!">to Archive</a>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../styles/colors" as *;
+
+  .carousel__container {
+    padding-left: calc(((100% - 768px) / 2) + 220px);
+    position: relative;
+  }
+
+  .carousel__desc {
+    width: 180px;
+    position: absolute;
+    top: 0;
+    left: calc((100% - 768px) / 2);
+  }
+
+  .navigation {
+    margin-top: 4rem;
+  }
+
+  .carousel__desc a {
+    display: block;
+    margin-top: 4rem;
+    text-decoration: underline;
+  }
+
+  .carousel__slide {
+    width: fit-content;
+  }
+
+  .card {
+    display: block;
+    width: fit-content;
+  }
+
+  .card__image {
+    width: 320px;
+  }
+
+  .card__body {
+    margin-top: 1rem;
+
+    * + * {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .card__title {
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  .card__author {
+    font-size: 0.875rem;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    position: static;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    content: "";
+    width: 12px;
+    aspect-ratio: 1;
+  }
+
+  .swiper-button-next::after {
+    border-right: 2px solid $color-text;
+    border-bottom: 2px solid $color-text;
+    transform: translateX(-2px) rotate(-45deg);
+  }
+
+  .swiper-button-prev::after {
+    border-left: 2px solid $color-text;
+    border-bottom: 2px solid $color-text;
+    transform: translateX(2px) rotate(45deg);
+  }
+</style>
+
+<script>
+  import Swiper from "swiper/bundle";
+  import "swiper/css/bundle";
+
+  const $fractionCurrent: HTMLElement | null = document.querySelector(
+    ".fraction > .current"
+  );
+
+  const carousel = new Swiper(".carousel", {
+    loop: true,
+    spaceBetween: 16,
+    slidesPerView: "auto",
+    speed: 1000,
+    autoplay: {
+      delay: 5000,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    on: {
+      transitionEnd: (e) => {
+        $fractionCurrent?.textContent &&
+          ($fractionCurrent.textContent = `${e.realIndex + 1}`);
+      },
+    },
+  });
+</script>

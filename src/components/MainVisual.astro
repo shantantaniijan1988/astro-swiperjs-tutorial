@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import mainvisualImage from "../assets/main-visual_image.jpg";
+---
+
+<div class="main-visual">
+  <div class="main-visual__inner"></div>
+</div>
+
+<style lang="scss">
+  .main-visual {
+    height: 500px;
+  }
+
+  .main-visual__inner {
+    width: 100%;
+    height: 100%;
+    background-image: url(../assets/main-visual_image.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
